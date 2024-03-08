@@ -8,7 +8,8 @@ public class CarBehaviour : MonoBehaviour
 {
     public Text fuelText;
     public Text lowFuelText;
-    float fuelValue = 5000;
+    public AudioSource audioSource;
+    float fuelValue = 500;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +21,10 @@ public class CarBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fuelValue < 500)
+        if (fuelValue < 50)
         {
             lowFuelText.text = " Fuel is low ";
+            audioSource.Play();
         }
 
         if (fuelValue != 0)
@@ -72,10 +74,14 @@ public class CarBehaviour : MonoBehaviour
     {
         if (collision.gameObject.name.StartsWith("Drum"))
         {
-            fuelValue = 5000;
+            fuelValue = 500;
             fuelText.text = " Fuel is: " + fuelValue.ToString();
             lowFuelText.text = "";
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.name.StartsWith("Buildings"))
+        {
+            fuelValue -= 5;
         }
         Debug.Log("collided");
     }
